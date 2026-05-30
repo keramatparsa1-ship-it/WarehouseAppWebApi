@@ -1,0 +1,125 @@
+{
+  "Version": 1,
+  "Hash": "35Uw7D3gCs05/Aie3yqDvBqUv7nuWH4k1u1IOta6McY=",
+  "Source": "WarehouseAppWebApi",
+  "BasePath": "_content/WarehouseAppWebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "WarehouseAppWebApi\\wwwroot",
+      "Source": "WarehouseAppWebApi",
+      "ContentRoot": "C:\\Users\\noor\\source\\repos\\WarehouseAppWebApi\\WarehouseAppWebApi\\wwwroot\\",
+      "BasePath": "_content/WarehouseAppWebApi",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\noor\\source\\repos\\WarehouseAppWebApi\\WarehouseAppWebApi\\wwwroot\\index.html",
+      "SourceId": "WarehouseAppWebApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\noor\\source\\repos\\WarehouseAppWebApi\\WarehouseAppWebApi\\wwwroot\\",
+      "BasePath": "_content/WarehouseAppWebApi",
+      "RelativePath": "index#[.{fingerprint}]?.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ehul77gchw",
+      "Integrity": "knDKaaL4z1FEWITLWf4nXD4w2LjU+ZdEh6NdNLL/Frk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "index.ehul77gchw.html",
+      "AssetFile": "C:\\Users\\noor\\source\\repos\\WarehouseAppWebApi\\WarehouseAppWebApi\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6361"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"knDKaaL4z1FEWITLWf4nXD4w2LjU+ZdEh6NdNLL/Frk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 08:07:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ehul77gchw"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-knDKaaL4z1FEWITLWf4nXD4w2LjU+ZdEh6NdNLL/Frk="
+        }
+      ]
+    },
+    {
+      "Route": "index.html",
+      "AssetFile": "C:\\Users\\noor\\source\\repos\\WarehouseAppWebApi\\WarehouseAppWebApi\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6361"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"knDKaaL4z1FEWITLWf4nXD4w2LjU+ZdEh6NdNLL/Frk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 08:07:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-knDKaaL4z1FEWITLWf4nXD4w2LjU+ZdEh6NdNLL/Frk="
+        }
+      ]
+    }
+  ]
+}

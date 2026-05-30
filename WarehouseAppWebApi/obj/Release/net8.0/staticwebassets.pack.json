@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\noor\\source\\repos\\WarehouseAppWebApi\\WarehouseAppWebApi\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.WarehouseAppWebApi.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.WarehouseAppWebApi.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.build.WarehouseAppWebApi.props",
+      "PackagePath": "build\\WarehouseAppWebApi.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.WarehouseAppWebApi.props",
+      "PackagePath": "buildMultiTargeting\\WarehouseAppWebApi.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildTransitive.WarehouseAppWebApi.props",
+      "PackagePath": "buildTransitive\\WarehouseAppWebApi.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

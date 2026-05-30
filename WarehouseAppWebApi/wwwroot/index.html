@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستم ساده انبارداری</title>
+    <!-- استفاده از Tailwind CSS برای طراحی زیبا بدون دردسر -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-bold text-gray-800 border-b pb-4 mb-6">سیستم مدیریت انبار (انبارداری)</h1>
+
+        <!-- فرم ثبت کالای جدید -->
+        <div class="bg-gray-50 p-4 rounded-lg mb-8">
+            <h2 class="text-lg font-bold text-gray-700 mb-4">ثبت کالای جدید در انبار</h2>
+            <form id="productForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <input type="text" id="name" placeholder="نام کالا" required class="p-2 border rounded-md">
+                <input type="text" id="code" placeholder="کد کالا (مثال: PRD-1)" required class="p-2 border rounded-md">
+                <input type="number" id="quantity" placeholder="تعداد موجودی" required class="p-2 border rounded-md">
+                <input type="number" id="price" placeholder="قیمت (ریال)" required class="p-2 border rounded-md">
+                <button type="submit" class="md:col-span-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-md transition duration-200">
+                    افزودن به انبار
+                </button>
+            </form>
+        </div>
+
+        <!-- جدول لیست موجودی انبار -->
+        <h2 class="text-lg font-bold text-gray-700 mb-3">موجودی فعلی انبار</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-right border-collapse">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-700">
+                        <th class="p-3 border">کد کالا</th>
+                        <th class="p-3 border">نام کالا</th>
+                        <th class="p-3 border">تعداد</th>
+                        <th class="p-3 border">قیمت واحد</th>
+                        <th class="p-3 border text-center">عملیات</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- کالاها به صورت داینامیک از API گرفته شده و اینجا نمایش داده می‌شوند -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const apiUrl = '/api/products';
+
+        // ۱. تابع دریافت کالاها از API بک‌اند
+        async function fetchProducts() {
+            try {
+                const response = await fetch(apiUrl);
+                const products = await response.json();
+                const tbody = document.getElementById('productTableBody');
+                tbody.innerHTML = '';
+
+                products.forEach(product => {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b hover:bg-gray-50';
+                    row.innerHTML = `
+                        <td class="p-3 border font-mono text-sm">${product.code}</td>
+                        <td class="p-3 border font-bold text-gray-800">${product.name}</td>
+                        <td class="p-3 border">${product.quantity}</td>
+                        <td class="p-3 border">${Number(product.price).toLocaleString()} ریال</td>
+                        <td class="p-3 border text-center">
+                            <button onclick="deleteProduct(${product.id})" class="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded">حذف</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("خطا در دریافت اطلاعات:", error);
+            }
+        }
+
+        // ۲. تابع ارسال کالای جدید به API بک‌اند
+        document.getElementById('productForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const product = {
+                name: document.getElementById('name').value,
+                code: document.getElementById('code').value,
+                quantity: parseInt(document.getElementById('quantity').value),
+                price: parseFloat(document.getElementById('price').value)
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(product)
+                });
+
+                if (response.ok) {
+                    document.getElementById('productForm').reset();
+                    fetchProducts(); // ریلود کردن لیست کالاها
+                }
+            } catch (error) {
+                console.error("خطا در ثبت کالا:", error);
+            }
+        });
+
+        // ۳. تابع حذف کالا از طریق API بک‌اند
+        async function deleteProduct(id) {
+            if (confirm("آیا از حذف این کالا از انبار اطمینان دارید؟")) {
+                try {
+                    const response = await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+                    if (response.ok) {
+                        fetchProducts(); // ریلود کردن لیست
+                    }
+                } catch (error) {
+                    console.error("خطا در حذف کالا:", error);
+                }
+            }
+        }
+
+        // اجرای اولیه تابع برای نمایش کالاها در اولین بارگذاری صفحه
+        fetchProducts();
+    </script>
+</body>
+</html>
