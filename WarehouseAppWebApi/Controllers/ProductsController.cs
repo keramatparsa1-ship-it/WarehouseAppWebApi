@@ -1,43 +1,110 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WarehouseAppWebApi.Data;
-using WarehouseAppWebApi.Models;
-using Microsoft.EntityFrameworkCore;
+using WarehouseApp.Application.Interfaces;
+using WarehouseApp.Application.DTOs;
+using WarehouseApp.Domain.Entities;
 
-namespace WarehouseAppWebApi.Controllers
+namespace WarehouseApp.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IProductRepository _productRepository;
 
-        public ProductsController(AppDbContext context)
+        public ProductsController(IProductRepository productRepository)
         {
-            _context = context;
+            _productRepository = productRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return await _context.Products.ToListAsync();
+            var products = await _productRepository.GetAllAsync();
+
+            var productDtos = products.Select(p => new ProductDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                SKU = p.SKU,
+                Description = p.Description,
+                Price = p.Price,
+                CategoryId = p.CategoryId,
+                CategoryName = p.Category?.Name ?? ""
+            });
+
+            return Ok(productDtos);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var p = await _productRepository.GetByIdAsync(id);
+
+            if (p == null)
+                return NotFound();
+
+            var dto = new ProductDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                SKU = p.SKU,
+                Description = p.Description,
+                Price = p.Price,
+                CategoryId = p.CategoryId,
+                CategoryName = p.Category?.Name ?? ""
+            };
+
+            return Ok(dto);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> Create(Product product)
+        public async Task<IActionResult> Create(ProductDto dto)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetAll), new { id = product.Id }, product);
+            var product = new Product
+            {
+                Name = dto.Name,
+                SKU = dto.SKU,
+                Description = dto.Description,
+                Price = dto.Price,
+                CategoryId = dto.CategoryId
+            };
+
+            await _productRepository.AddAsync(product);
+
+            dto.Id = product.Id;
+
+            return CreatedAtAction(nameof(GetById), new { id = product.Id }, dto);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, ProductDto dto)
+        {
+            var existing = await _productRepository.GetByIdAsync(id);
+
+            if (existing == null)
+                return NotFound();
+
+            existing.Name = dto.Name;
+            existing.SKU = dto.SKU;
+            existing.Description = dto.Description;
+            existing.Price = dto.Price;
+            existing.CategoryId = dto.CategoryId;
+
+            await _productRepository.UpdateAsync(existing);
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null) return NotFound();
+            var existing = await _productRepository.GetByIdAsync(id);
 
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            if (existing == null)
+                return NotFound();
+
+            await _productRepository.DeleteAsync(existing);
+
             return NoContent();
         }
     }

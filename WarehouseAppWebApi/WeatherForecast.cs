@@ -1,4 +1,4 @@
-namespace WarehouseAppWebApi
+namespace WarehouseApp.WebApi
 {
     public class WeatherForecast
     {
